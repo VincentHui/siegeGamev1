@@ -1,9 +1,8 @@
 function startTurn(dayTurn = 0, dailyCallback) {
-  //   getPlayerAnswer(dayTurn);
-  if (dayTurn >= 4) {
-    console.log("end");
-    return;
-  }
+  //   if (dayTurn >= 4) {
+  //     console.log("end");
+  //     return;
+  //   }
 
   dailyCallback(dayTurn);
   dayTurn = dayTurn + 1;

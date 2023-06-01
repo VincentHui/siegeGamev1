@@ -1,12 +1,11 @@
 const { startTurn } = require("./DayCounterLogic");
-const reader = require("readline-sync"); //npm install readline-sync
+const { AskCommands } = require("./PlayerQuestions");
 
-function getPlayerAnswer(dayturn) {
-  console.log(`day : ${dayturn}`);
-  let answer = reader.question("give me your answer: ");
-  console.log(answer);
-}
+const gameContext = {
+  manPower: 15000,
+};
 
 startTurn(0, (turnNumber) => {
-  getPlayerAnswer(turnNumber);
+  console.log({ turnNumber });
+  AskCommands(gameContext);
 });
