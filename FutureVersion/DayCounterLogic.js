@@ -4,8 +4,12 @@ function startTurn(dayTurn = 0, dailyCallback) {
   //     return;
   //   }
 
-  dailyCallback(dayTurn);
+  const endGame = dailyCallback(dayTurn);
   dayTurn = dayTurn + 1;
+  if (endGame) {
+    console.log("gameOver");
+    return;
+  }
   startTurn(dayTurn, dailyCallback);
 }
 
