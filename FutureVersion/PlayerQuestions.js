@@ -30,4 +30,5 @@ const ParseResponseToOrders = (response, orders = playerOrders) => {
 module.exports = {
   AskForPlayerResponse,
   ParseResponseToOrders,
+  playerOrders,
 };

@@ -50,7 +50,7 @@ console.log(`current effects ${deckEffectsToString(playerDecks.eventDeck)}`);
 //draw from deck
 const { remainingDeck, cardsDrawn } = drawFromTopOfDeck(
   currentGameDecks.eventDeck,
-  1
+  2
 );
 //update the games deck
 currentGameDecks.eventDeck = remainingDeck;

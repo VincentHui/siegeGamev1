@@ -1,6 +1,7 @@
 const { startTurn } = require("./DayCounterLogic");
-const { ParseResponseToOrders } = require("./PlayerQuestions");
+const { ParseResponseToOrders, playerOrders } = require("./PlayerQuestions");
 const reader = require("readline-sync"); //npm install readline-sync
+const { greenText, yellowText, resetText } = require("./Colors");
 
 const gameContext = {
   manPower: 15000,
