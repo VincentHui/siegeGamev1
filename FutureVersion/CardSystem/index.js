@@ -21,7 +21,7 @@ const mergeObjects = (data) => {
 
 const getDeckEffects = (aDeck) => {
   const meregedEffects = mergeObjects(
-    aDeck.map((card) => ({ ...card.effect() }))
+    aDeck.map((card) => ({ ...card.effect }))
   );
   return meregedEffects;
 };

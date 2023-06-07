@@ -12,16 +12,16 @@ const orderDeck = [
   {
     //attack
     name: orderNames[0],
-    effect: (state) => ({
+    effect: {
       manpower: randomRange(-10000, 0),
-    }),
+    },
   },
   {
     //recover
     name: orderNames[1],
-    effect: (state) => ({
+    effect: {
       manpower: randomRange(10000, 1),
-    }),
+    },
   },
 ];
 
@@ -30,9 +30,9 @@ const playerDecks = {
   resourceDeck: [
     {
       name: "initial invasion force",
-      effect: (state) => ({
+      effect: {
         manpower: 15000,
-      }),
+      },
     },
   ],
 };
