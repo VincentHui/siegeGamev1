@@ -50,7 +50,8 @@ const shuffleDeck = (deckToShuffle) => shuffleArray(deckToShuffle);
 /**
  * This function takes in an array of cards (deckToDrawFromArray) and a number of cards to draw (numberOfCardsToDraw).
  * It then returns an object containing the remaining deck and the cards that were drawn from the top.
- * @param {array} deckToDrawFromArray An array of cards from which to draw.
+ * We return these new values and let the caller decide how to change whats give not the function
+ * @param {array<Card>} deckToDrawFromArray An array of cards from which to draw.
  * @param {number} numberOfCardsToDraw The number of cards to draw from the top of the deck.
  * @returns {object} An object with two properties: remainingDeck and cardsDrawn.
  */
@@ -77,7 +78,19 @@ const drawFromTopOfDeck = (deckToDrawFromArray, numberOfCardsToDraw) => {
   return { remainingDeck, cardsDrawn };
 };
 
-const addToTopOfDeck = () => {};
+/**
+ * Adds cards to the top of a deck
+ * @param {array<Card>} deckToAddTo - The deck to add cards to
+ * @param {array<Card>} cardsToAdd - The cards to add to the deck
+ * @returns {array<Card>} The modified deck
+ */
+const addToTopOfDeck = (deckToAddTo, cardsToAdd) => {
+  if (cardsToAdd.length === 0) {
+    console.error("cardsToAdd has no cards");
+    return deckToAddTo;
+  }
+  return cardsToAdd.concat(deckToAddTo);
+};
 
 /**
  * Description
