@@ -1,15 +1,19 @@
+/**
+ * This function starts a turn and calls the dailyCallback for every dayTurn
+ * @param {number} dayTurn - The current day turn of the game
+ * @param {function} dailyCallback - A callback function that is called every dayTurn
+ */
 function startTurn(dayTurn = 0, dailyCallback) {
-  //   if (dayTurn >= 4) {
-  //     console.log("end");
-  //     return;
-  //   }
-
+  // Call the daily callback with the current day turn
   const endGame = dailyCallback(dayTurn);
+  // Increment the day turn
   dayTurn = dayTurn + 1;
+  // If the game has ended, log "gameOver" and return
   if (endGame) {
     console.log("gameOver");
     return;
   }
+  // Start the next turn
   startTurn(dayTurn, dailyCallback);
 }
 
