@@ -12,4 +12,13 @@
 . we want to update the user about their armies status
     - manpower counter
 
+
+4. create an army variable where we can store multiple states of the army.  
+    - always have an overall manpower pool, but also divide the manpower into various states "in camp", "building/projects", attack, foraging 
+
+5. as the options for a player increase, expand gameplay for player and allow player to make more than one order per turn to include various actions as well
+
+6. Revamp mechanics for attacking and capturing city
+    - build an dynamic and interconnected system for defense and offense that interacts with each other. 
+
 */
