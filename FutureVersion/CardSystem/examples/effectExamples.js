@@ -3,7 +3,7 @@ const {
   drawFromTopOfDeck,
   shuffleDeck,
   Card,
-} = require("./index");
+} = require("../index");
 
 //this is a deck that shouldn't change, think of it as a blueprint for all cards and then when we start a game we make a copy of it
 const eventDeck = [

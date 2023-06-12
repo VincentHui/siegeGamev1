@@ -1,26 +1,24 @@
-const { getShuffledNumberArray, shuffleArray } = require("./randomLogic");
+const { shuffleArray } = require("./randomLogic");
 /**
  * Merges objects in an array into one object
  * @param {Object[]} data - An array of objects to be merged
  */
 const mergeObjects = (data) => {
-  const result = {}; //(1)
+  const result = {};
 
   data.forEach((basket) => {
-    //(2)
     for (let [key, value] of Object.entries(basket)) {
-      //(3)
       if (result[key]) {
-        //(4)
-        result[key] += value; //(5)
+        result[key] += value;
       } else {
-        //(6)
         result[key] = value;
       }
     }
   });
-  return result; //(7)
+  return result;
 };
+
+const getNamesOfCardsInDeck = (deck) => deck.map((card) => card.name);
 
 const getDeckEffects = (aDeck) => {
   const meregedEffects = mergeObjects(
@@ -148,5 +146,6 @@ module.exports = {
   shuffleDeck,
   getFromDeckByNames,
   getPlayedDeckEffects,
+  getNamesOfCardsInDeck,
   Card,
 };

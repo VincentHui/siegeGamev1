@@ -1,12 +1,3 @@
-const getShuffledNumberArray = (amount, start = 0) => {
-  var foo = [];
-
-  for (var i = start; i < amount; i++) {
-    foo.push(i);
-  }
-  return shuffleArray(foo);
-};
-
 /**
  * @function shuffleArray
  * @description Shuffles an array of values
@@ -31,7 +22,6 @@ const randomRange = (min, max) => {
 const randomRangeInteger = (min, max) => Math.floor(randomRange(min, max));
 
 module.exports = {
-  getShuffledNumberArray,
   shuffleArray,
   randomRange,
   randomRangeInteger,
