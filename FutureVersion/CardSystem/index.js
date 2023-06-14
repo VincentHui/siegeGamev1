@@ -27,9 +27,10 @@ const getDeckEffects = (aDeck) => {
   return meregedEffects;
 };
 
-const getPlayedDeckEffects = (aDeck) => {
+const getPlayedDeckEffects = (aDeck, state) => {
+  console.log({ aDeck });
   const meregedEffects = mergeObjects(
-    aDeck.map((card) => ({ ...card.playCard() }))
+    aDeck.map((card) => ({ ...card.playCard(state) }))
   );
   return meregedEffects;
 };
@@ -138,6 +139,15 @@ class Card {
   }
 }
 
+const DuplicateCard = (cardToDuplicate, amountOfCards) => {
+  const amount = Math.max(amountOfCards, 0);
+  let duplicatedCards = [];
+  for (let index = 0; index < amount; index++) {
+    duplicatedCards.push(cardToDuplicate);
+  }
+  return duplicatedCards;
+};
+
 module.exports = {
   getDeckEffects,
   deckEffectsToString,
@@ -148,4 +158,5 @@ module.exports = {
   getPlayedDeckEffects,
   getNamesOfCardsInDeck,
   Card,
+  DuplicateCard,
 };

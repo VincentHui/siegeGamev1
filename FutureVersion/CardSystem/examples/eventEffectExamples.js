@@ -2,6 +2,7 @@ const {
   deckEffectsToString,
   drawFromTopOfDeck,
   shuffleDeck,
+  DuplicateCard,
   Card,
 } = require("../index");
 
@@ -34,6 +35,21 @@ const eventDeck = [
     description: "A Pilar of fire destroys friend and foe alike",
     effect: { manPower: -10000, attackStrength: 1 },
   }),
+  ...DuplicateCard(
+    new Card({
+      name: "Fell Words",
+      description: "Fell words carry in from the west",
+      effect: { fellWords: 1 },
+    }),
+    2
+  ),
+  ...DuplicateCard(
+    new Card({
+      name: "Nothing notable...",
+      description: "No notable event has happened",
+    }),
+    10
+  ),
 ];
 
 //setup the games initial deck

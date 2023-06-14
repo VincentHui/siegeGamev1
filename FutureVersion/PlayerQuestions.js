@@ -6,7 +6,7 @@ const AskForPlayerResponse = (askStatement) => {
   return reader.question(askStatement);
 };
 
-const ParseResponseToOrders = (response, orders = playerOrders) => {
+const ParseResponseToOrders = (response, orders) => {
   const upperCase = response.toUpperCase();
   const chosenOrders = orders.filter(
     (order) => order.toUpperCase() === upperCase
