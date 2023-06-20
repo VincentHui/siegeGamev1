@@ -1,11 +1,12 @@
 const { randomRangeInteger } = require("../randomLogic");
 const { startTurn } = require("../../DayCounterLogic");
-const { Card, getDeckEffects, addToTopOfDeck } = require("../index");
-const { MakePlayerOrdersFromOrderDeck } = require("../examples/common");
 const {
-  AskForPlayerResponse,
-  ParseResponseToOrders,
-} = require("../../PlayerQuestions");
+  Card,
+  getDeckEffects,
+  addToTopOfDeck,
+  GetCardFromDeckByName,
+} = require("../index");
+const { GetOrderFromOrderDeck } = require("./commonExampleLogic");
 
 const orderDeck = [
   new Card({
@@ -38,20 +39,18 @@ const playerDecks = {
 };
 
 startTurn(0, (turnNumber) => {
-  // Log the current turn number
   console.log({ turnNumber });
-  const { ordersPlayedEffects, orderFromResponse } =
-    MakePlayerOrdersFromOrderDeck(orderDeck);
+  const orderCardName = GetOrderFromOrderDeck(orderDeck);
+  const orderCard = GetCardFromDeckByName(orderCardName, orderDeck);
+  const ordersPlayedEffects = orderCard.playCard();
+  console.log("past manpower", getDeckEffects(playerDecks.resourceDeck));
 
   // Log the result of the order
   console.log(
-    `General you ordered us to ${orderFromResponse} and as a result we ${
+    `General you ordered us to ${orderCardName} and as a result we ${
       Math.sign(ordersPlayedEffects.manPower) > 0 ? "gained" : "lost"
     } ${ordersPlayedEffects.manPower} men`
   );
-
-  // Log the current effects of the resource deck
-  console.log(getDeckEffects(playerDecks.resourceDeck));
 
   // Add a card to the top of the resource deck
   playerDecks.resourceDeck = addToTopOfDeck(playerDecks.resourceDeck, [
@@ -63,21 +62,20 @@ startTurn(0, (turnNumber) => {
   ]);
 
   // Get the manpower left and store it in the variable 'manpowerLeft'
-  const manpowerLeft = getDeckEffects(playerDecks.resourceDeck).manPower;
+  const manpowerLeft = Math.max(
+    getDeckEffects(playerDecks.resourceDeck).manPower,
+    0
+  );
 
   // Log the manpower left
-  console.log(manpowerLeft);
+  console.log({ manpowerLeft }, "\n\n", "* * * * * * * *", "\n");
 
   // If there is no manpower left, log a message and return true to end the game
-  if (manpowerLeft < 0) {
+  if (manpowerLeft <= 0) {
     console.log("we have no men left");
     return true;
   }
 });
-
-test = () => {
-  console.log();
-};
 
 module.exports = {
   MakePlayerOrdersFromOrderDeck,

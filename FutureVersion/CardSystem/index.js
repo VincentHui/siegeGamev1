@@ -35,6 +35,10 @@ const getPlayedDeckEffects = (aDeck, state) => {
   return meregedEffects;
 };
 
+function GetCardFromDeckByName(cardName, deck) {
+  return deck.filter((card) => card.name === cardName)[0];
+}
+
 const deckEffectsToString = (aDeck) => {
   const effect = getDeckEffects(aDeck);
   let result = "";
@@ -75,6 +79,11 @@ const drawFromTopOfDeck = (deckToDrawFromArray, numberOfCardsToDraw) => {
 
   // Return an object with the remaining deck and the cards drawn
   return { remainingDeck, cardsDrawn };
+};
+
+const drawOneCardFromTopOfDeck = (deckToDrawFrom) => {
+  const { remainingDeck, cardsDrawn } = drawFromTopOfDeck(deckToDrawFrom, 1);
+  return cardsDrawn[0];
 };
 
 /**
@@ -159,4 +168,6 @@ module.exports = {
   getNamesOfCardsInDeck,
   Card,
   DuplicateCard,
+  GetCardFromDeckByName,
+  drawOneCardFromTopOfDeck,
 };
