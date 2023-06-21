@@ -35,11 +35,9 @@ const getNamesOfCardsInDeck = (deck) => deck.map((card) => card.name);
 
 /**
  * This function takes in a deck of cards as an argument and returns the merged effects from each card.
- * @function getDeckEffects
  * @param {Card[]} aDeck - The deck of cards.
  * @returns {Object} The effects of all the cards in the deck.
  */
-
 const getDeckEffects = (aDeck) => {
   // Use the mergeObjects function to merge all the effects of the cards into one object
   const meregedEffects = mergeObjects(
@@ -52,7 +50,6 @@ const getDeckEffects = (aDeck) => {
 
 /**
  * This function takes in a deck and a state, and returns the merged effects of playing all the cards in the deck
- * @function getPlayedDeckEffects
  * @param {Card[]} aDeck - The deck to be played.
  * @param {object} state - The current state of the game.
  * @returns {object} mergedEffects - The merged effects of playing the deck.
@@ -207,7 +204,6 @@ class Card {
 /**
  * This function takes in a card to duplicate and an amount of cards to duplicate it by
  * and returns an array of duplicated cards.
- * @function DuplicateCard
  * @param {Card} cardToDuplicate - The object to be duplicated
  * @param {Number} amountOfCards - The number of duplicates to create
  * @returns {Card[]} An array of the duplicated objects
