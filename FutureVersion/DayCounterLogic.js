@@ -1,7 +1,7 @@
 /**
  * This function starts a turn and calls the dailyCallback for every dayTurn
  * @param {number} dayTurn - The current day turn of the game
- * @param {function} dailyCallback - A callback function that is called every dayTurn
+ * @param {(dayTurn:number)=>boolean} dailyCallback - A callback function that is called every dayTurn returns true when the game is over
  */
 function startTurn(dayTurn = 0, dailyCallback) {
   // Call the daily callback with the current day turn

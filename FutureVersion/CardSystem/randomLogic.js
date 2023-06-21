@@ -15,10 +15,22 @@ const shuffleArray = (unshuffled) => {
   return shuffled;
 };
 
+/**
+ * Generates a random number between a given min and max value.
+ * @param {number} min - The minimum value of the range.
+ * @param {number} max - The maximum value of the range.
+ * @returns {number} A random number between the min and max values.
+ */
 const randomRange = (min, max) => {
   return Math.random() * (max - min) + min;
 };
 
+/**
+ * Returns a random integer between min (inclusive) and max (exclusive)
+ * @param {Number} min - The minimum number
+ * @param {Number} max - The maximum number
+ * @returns {Number} A random integer between min (inclusive) and max (exclusive)
+ */
 const randomRangeInteger = (min, max) => Math.floor(randomRange(min, max));
 
 module.exports = {
