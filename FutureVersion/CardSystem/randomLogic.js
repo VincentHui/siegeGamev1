@@ -1,5 +1,4 @@
 /**
- * @function shuffleArray
  * @description Shuffles an array of values
  * @param {Card[]} unshuffled - Unshuffled array of values
  * @returns {Card[]} shuffled - Shuffled array of values
