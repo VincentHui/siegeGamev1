@@ -1,8 +1,8 @@
 /**
  * @function shuffleArray
  * @description Shuffles an array of values
- * @param {array} unshuffled - Unshuffled array of values
- * @returns {array} shuffled - Shuffled array of values
+ * @param {Card[]} unshuffled - Unshuffled array of values
+ * @returns {Card[]} shuffled - Shuffled array of values
  */
 const shuffleArray = (unshuffled) => {
   // Map the values to objects with a random sort value

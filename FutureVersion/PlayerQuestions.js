@@ -1,6 +1,7 @@
 const playerOrders = ["Attack", "Engineering", "Espionage", "Recover"];
 const reader = require("readline-sync"); //npm install readline-sync
 const { yellowText, redText, greenText, resetText } = require("./Colors");
+const { Card } = require("./CardSystem");
 
 /**
  * AskForPlayerResponse is a function that takes in an askStatement as an argument and returns the response from the reader.question() method
@@ -14,7 +15,7 @@ const AskForPlayerResponse = (askStatement) => {
  * This function takes in a response and a list of orders, filters through the orders to find one that matches the response, and returns it.
  * If no order is found, it prompts the user for another response.
  * @param {string} response The response to parse
- * @param {array} orders The array of orders to choose from
+ * @param {Card[]} orders The array of orders to choose from
  * @returns {string} The chosen order
  */
 const ParseResponseToOrders = (response, orders) => {

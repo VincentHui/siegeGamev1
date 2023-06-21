@@ -7,7 +7,7 @@ const {
 /**
  * This function takes an orderDeck as an argument
  * and returns an orderFromResponse based on user input.
- * @param {Array<Card>} orderDeck - The deck of orders from which to choose
+ * @param {Card[]} orderDeck - The deck of orders from which to choose
  * @returns {string} The order chosen by the player
  */
 function GetOrderFromOrderDeck(orderDeck) {
