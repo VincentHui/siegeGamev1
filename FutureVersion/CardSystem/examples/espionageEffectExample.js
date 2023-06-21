@@ -64,49 +64,69 @@ const EspionageDeck = [
   ),
 ];
 
+// Global state object containing espionage level, man power and defences
 const globalState = {
-  espionageLevel: 0,
-  manPower: 15000,
-  defences: 50,
+  espionageLevel: 0, // Espionage level is set to 0
+  manPower: 15000, // Man power is set to 15000
+  defences: 50, // Defences is set to 50
 };
-
+// This function increases the espionage level based on an input card
 function Espionage(espionageCard) {
-  console.log(espionageCard);
+  console.log(espionageCard); // Log the espionage card for reference
   if (espionageCard.name === "increase espoinage level") {
-    globalState.espionageLevel += espionageCard.effect.espionageLevel;
+    // Check if the name of the card is 'increase espionage level'
+    globalState.espionageLevel += espionageCard.effect.espionageLevel; // Increase the espionage level by the card's effect value
   }
 }
 
+// Attack function takes in an attackCard object as a parameter
 function Attack(attackCard) {
+  // Destructure manPower and esponiageModifier from the playCard method of the attackCard object
   const { manPower, esponiageModifier } = attackCard.playCard(globalState);
+  // Log the number of men lost in the attack
   console.log(
     `General you ordered us to attack and as a result we lost ${manPower} men`
   );
+  // Reduce global state defences by 1
   globalState.defences -= 1;
+  // Log the updated defences
   console.log(`defences reduced to ${globalState.defences}`);
+  // Add the manPower lost to the global state manPower
   globalState.manPower += manPower;
+  // If the espionage modifier is greater than 0, log that intel was used to advantage
   if (esponiageModifier > 0) {
     console.log("we use our intel to our advantage!");
+    // Reduce global state defences by the espionage modifier
     globalState.defences -= esponiageModifier;
+    // Log the updated defences
     console.log(`defences reduced to ${globalState.defences}`);
   }
 }
 
+// Recover function takes in a recoverCard object as a parameter
 function Recover(recoverCard) {
+  // Destructure manPower from the playCard method of the recoverCard object
   const { manPower } = recoverCard.playCard();
+  // Add the manPower recovered to the global state manPower
   globalState.manPower += manPower;
+  // Log the amount of manPower recovered
   console.log(`we have recovered ${manPower}`);
-  //   console.log({ manPower, esponiageManpowerModifier });
+  // Uncomment the following line to log the manPower and espionageModifier values
+  // console.log({ manPower, esponiageManpowerModifier });
 }
 
+// Start a turn for the given number of turns
 startTurn(0, (turnNumber) => {
-  // Log the current turn number
+  // Log the turn number and global state
   console.log({ turnNumber });
   console.log({ globalState });
+
+  // Get an order card name from the order deck
   const orderCardName = GetOrderFromOrderDeck(orderDeck);
   console.log(`General you ordered us to ${orderCardName}...`);
   const orderCard = GetCardFromDeckByName(orderCardName, orderDeck);
 
+  // Determine the type of order card and execute the corresponding action
   if (orderCard.name === "Espoinage") {
     const espionageCard = drawOneCardFromTopOfDeck(shuffleDeck(EspionageDeck));
     Espionage(espionageCard);
@@ -118,6 +138,7 @@ startTurn(0, (turnNumber) => {
     Recover(orderCard);
   }
 
+  // Check if the player has won or lost the game
   if (globalState.manPower <= 0) {
     console.log("YOU HAVE LOST");
     return true;
