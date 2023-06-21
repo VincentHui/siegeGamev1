@@ -77,5 +77,5 @@ playerDecks.eventDeck = cardsDrawn;
 //get current effects which should be something now that we've drawn from the deck
 console.log(`current effects ${deckEffectsToString(playerDecks.eventDeck)}`);
 
-//get players effect deck which should have one card in it
+//get players effect deck which should have two cards in it
 console.log(playerDecks.eventDeck);
