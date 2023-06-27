@@ -1,7 +1,10 @@
 const { randomRangeInteger } = require("../randomLogic");
 const { startTurn } = require("../../DayCounterLogic");
-const { Card, getDeckEffects, addToTopOfDeck } = require("../index");
+const { Card, getPlayedDeckEffects, getDeckEffects, addToTopOfDeck, drawFromTopOfDeck } = require("../index");
 const { MakePlayerOrdersFromOrderDeck } = require("../examples/common");
+const { shuffleDrawPlay} = require("../examples/espionageOrder.js")
+const { EspionageDeck } = require("../examples/espionageEffectExample.js")
+
 const {
   AskForPlayerResponse,
   ParseResponseToOrders,
@@ -26,6 +29,16 @@ const orderDeck = [
       return { manPower: randomRangeInteger(0, 500) };
     },
   }),
+  new Card({
+    //Espionage
+    name: "Espionage",
+    description: "Espionage Order",
+    playCard: (state) => {
+      //calculations with state can be done here
+        const espionageResult = shuffleDrawPlay(EspionageDeck);
+        return espionageResult; 
+    },
+  }),
 ];
 
 const playerDecks = {
@@ -44,11 +57,18 @@ startTurn(0, (turnNumber) => {
     MakePlayerOrdersFromOrderDeck(orderDeck);
 
   // Log the result of the order
+  if (orderFromResponse !== "Espionage"){
   console.log(
     `General you ordered us to ${orderFromResponse} and as a result we ${
       Math.sign(ordersPlayedEffects.manPower) > 0 ? "gained" : "lost"
     } ${ordersPlayedEffects.manPower} men`
-  );
+  )};
+
+  if (orderFromResponse === "Espionage"){
+    console.log(
+      'General you ordered us to Espionage'
+    )
+  };
 
   // Log the current effects of the resource deck
   console.log(getDeckEffects(playerDecks.resourceDeck));

@@ -9,12 +9,12 @@ const orderDeck = [
     name: "Attack",
     description: "Attack Order",
     playCard: (state) => {
-      const esponiageManpowerModifier =
-        state.espionageLevel === undefined ? 0 : state.esponiageLevel;
+      const espionageManpowerModifier =
+        state.espionageLevel === undefined ? 0 : state.espionageLevel;
       //calculations with state can be done here
       return {
         manPower: randomRangeInteger(-5000, -1000),
-        esponiageManpowerModifier,
+        espionageManpowerModifier,
       };
     },
   }),
@@ -28,18 +28,20 @@ const orderDeck = [
     },
   }),
   new Card({
-    name: "Espoinage",
+    name: "Espionage",
     description: "gather intel and find weakness",
-    playCard: (state) => {},
+    playCard: (state) => {
+        
+    },
   }),
 ];
 
 const EspionageDeck = [
   new Card({
-    name: "increase espoinage level",
-    description: "increase espoinage levels for both modifer and other bonuses",
+    name: "increase espionage level",
+    description: "increase espionage levels for both modifer and other bonuses",
     effect: {
-      esponiage: 1,
+      espionage: 1,
     },
   }),
   new Card({
@@ -51,10 +53,18 @@ const EspionageDeck = [
   }),
   ...DuplicateCard(
     new Card({
-      name: "no espoinage bonus",
+      name: "no espionage bonus",
       description: "no bonus",
     }),
     5
+  ),
+  ...DuplicateCard(
+    new Card({
+      name: "Test",
+      description: "no bonus",
+      effect: console.log("WALALALA")
+    }),
+    299
   ),
 ];
 
@@ -71,3 +81,7 @@ startTurn(0, (turnNumber) => {
   //     } ${ordersPlayedEffects.manPower} men`
   //   );
 });
+
+module.exports = {
+  EspionageDeck
+};

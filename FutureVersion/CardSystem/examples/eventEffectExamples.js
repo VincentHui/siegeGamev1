@@ -5,6 +5,7 @@ const {
   DuplicateCard,
   Card,
 } = require("../index");
+const { randomRangeInteger } = require("../randomLogic");
 
 //this is a deck that shouldn't change, think of it as a blueprint for all cards and then when we start a game we make a copy of it
 const eventDeck = [
@@ -22,7 +23,7 @@ const eventDeck = [
   new Card({
     name: "Intervention",
     description: "A great power intervenes on your side",
-    effect: { manPower: 10000 },
+    effect: { morale: 1 },
   }),
   new Card({
     name: "Blockade",
@@ -34,6 +35,11 @@ const eventDeck = [
     name: "Pillar Of Fire",
     description: "A Pilar of fire destroys friend and foe alike",
     effect: { manPower: -10000, attackStrength: 1 },
+  }),
+  new Card({
+    name: "Torrential Rains",
+    description: "The heavens open up and drench land and men",
+    effect: { attritionModifier: 15, turnlength: randomRangeInteger(1, 4) }
   }),
   ...DuplicateCard(
     new Card({
@@ -82,3 +88,4 @@ console.log(`current effects ${deckEffectsToString(playerDecks.eventDeck)}`);
 
 //get players effect deck which should have one card in it
 console.log(playerDecks.eventDeck);
+
