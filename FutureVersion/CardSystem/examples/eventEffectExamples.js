@@ -54,7 +54,7 @@ const eventDeck = [
       name: "Nothing notable...",
       description: "No notable event has happened",
     }),
-    10
+    4
   ),
 ];
 
@@ -80,12 +80,9 @@ currentGameDecks.eventDeck = remainingDeck;
 //update the players deck
 playerDecks.eventDeck = cardsDrawn;
 
-// console.log(playerDecks);
-// console.log(currentGameDecks);
-
 //get current effects which should be something now that we've drawn from the deck
 console.log(`current effects ${deckEffectsToString(playerDecks.eventDeck)}`);
 
-//get players effect deck which should have one card in it
+//get players effect deck which should have two cards in it
 console.log(playerDecks.eventDeck);
 
