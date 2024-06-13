@@ -7,7 +7,7 @@ let Eventcards = [
     description:
       "A brewing storm opens the heavens. Rain pours down and soaks everyman to the bone.",
     effect: function () {
-      Manpower -= 500;
+      Manpower - 500;
     },
   },
 
@@ -16,7 +16,7 @@ let Eventcards = [
     description:
       "Some of our men captured a suspicious man walking among the camp.",
     effect: function () {
-      Morale += 1;
+      Morale + 1;
     },
   },
   {
