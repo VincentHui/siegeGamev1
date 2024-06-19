@@ -39,7 +39,9 @@ function manyTurns(currentTurn, numberofTurns, callback, ability, Enemyturn) {
   }
 
   currentTurn = currentTurn + 1;
-  console.log(`${whiteText}                   Turn ${currentTurn}${resetText}`);
+  console.log(
+    `${yellowText}--------------------Turn ${currentTurn}---------------------${resetText}`
+  );
   console.log(
     `Player: ${greenText}${Player1.HP}${resetText} HP, ${greenText}${Player1.Mana}${resetText} MP | Enemy: ${greenText}${Enemy.HP}${resetText} HP, ${greenText}${Enemy.Mana}${resetText} MP`
   );
@@ -59,7 +61,7 @@ function RandomCard() {
 
 function PlayAbility() {
   if (Player1.Initiative < 1) {
-    console.log(`Your turn is skipped...${resetText}`);
+    console.log(`${grayText}Your turn is skipped...${resetText}`);
     return;
   }
   if (Player1.Mana < 1) {

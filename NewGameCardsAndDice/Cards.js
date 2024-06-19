@@ -61,7 +61,7 @@ let PlayCards = [
     type: "Spellbook",
     description: "Recover a random amount of Health and Mana.",
     effect() {
-      const HPRecover = Math.floor(Math.random() * 50) + 20;
+      const HPRecover = Math.floor(Math.random() * 50) + 10;
       const ManaRecover = Math.floor(Math.random() * 5) + 3;
       (Player1.HP = Player1.HP + HPRecover),
         (Player1.Mana = Player1.Mana + ManaRecover);
@@ -75,7 +75,7 @@ let PlayCards = [
     cost: 3,
     type: "Luminary Arts",
     description:
-      "Prevent enemy from declaring an ability during their next turn",
+      "Unleash a massive flash of light, preventing the enemy from declaring an ability on their next turn",
     effect() {
       Player1.Mana = Player1.Mana - 3;
       Enemy.Initiative = -1;
@@ -92,7 +92,7 @@ let PlayCards = [
       Player1.HP = Player1.HP + 100;
       Player1.Initiative = -1;
       console.log(
-        `${greenText} Restore +100 HP. ${resetText}Your next turn is skipped.${resetText}`
+        `${greenText} Restore +100 HP. ${grayText}Your next turn is skipped.${resetText}`
       );
     },
   },
@@ -107,7 +107,7 @@ let PlayCards = [
       Player1.Initiative = -1;
       Enemy.HP = Enemy.HP - executionDMG;
       console.log(
-        `${redText}Enemy inflicted -${executionDMG} HP. ${resetText} Your next turn is skipped. ${resetText}`
+        `${redText}Enemy inflicted -${executionDMG} HP. ${grayText} Your next turn is skipped. ${resetText}`
       );
     },
   },
