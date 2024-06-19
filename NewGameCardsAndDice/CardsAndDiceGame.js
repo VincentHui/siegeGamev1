@@ -85,7 +85,7 @@ function InitiativeMechanics() {
 
 function Enemyturn() {
   if (Enemy.Initiative < 1) {
-    console.log(`\n${grayText}...Turn skipped!${resetText}\n`);
+    console.log(`\n${grayText}...Enemy turn skipped!${resetText}\n`);
     if (Enemy.WastrelsWrath > 0) {
       let wastreldmg = Enemy.WastrelsWrath * 40;
       Enemy.HP = Enemy.HP - wastreldmg;
