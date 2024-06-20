@@ -1,15 +1,18 @@
-const { Eventcards, Manpower, Morale } = require("./eventcards");
+const { Eventcards } = require("./eventcards");
+const { GameState } = require("./gamestate.js");
 
-// let Manpower = 2000;
-// let Morale = 10;
+// let GameState = {
+//   Manpower: 2000,
+//   Morale: 20,
+// };
 
 function Turnbase(turn, numberofturns, callback) {
   for (let i = turn; i < numberofturns; i++) {
     console.log([turn]);
     callback();
-    // Manpower = Manpower + 1000;
-    console.log("You have", Manpower, "men");
-    console.log("Army morale at", Morale);
+
+    console.log("You have", GameState.Manpower, "men");
+    console.log("Army morale at", GameState.Morale);
     turn++;
   }
 }
@@ -22,7 +25,8 @@ function getRandomEventCard() {
 function playEventCard() {
   const randomCard = getRandomEventCard();
   console.log(`Playing: ${randomCard.name} - ${randomCard.description}`);
-  return randomCard.effect();
+  const effect = randomCard.effect();
+  console.log({ effect });
 }
 
 Turnbase(2, 20, playEventCard);

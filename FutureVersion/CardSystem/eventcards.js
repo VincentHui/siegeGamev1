@@ -1,5 +1,4 @@
-let Manpower = 2000;
-let Morale = 10;
+let { GameState } = require("./gamestate.js");
 
 let Eventcards = [
   {
@@ -7,8 +6,7 @@ let Eventcards = [
     description:
       "A brewing storm opens the heavens. Rain pours down and soaks everyman to the bone.",
     effect() {
-      console.log("I work");
-      Manpower = Manpower - 500;
+      GameState.Manpower = GameState.Manpower + 1000;
     },
   },
 
@@ -17,8 +15,7 @@ let Eventcards = [
     description:
       "Some of our men captured a suspicious man walking among the camp.",
     effect() {
-      console.log("The men thirst for revenge");
-      Morale = Morale + 1;
+      GameState.Morale = GameState.Morale - 2;
     },
   },
   {
@@ -26,9 +23,23 @@ let Eventcards = [
     description:
       "A blazing star fell from the heavens to the earth, our men wonder at the sign.",
     effect() {
-      const SignsMorale = Math.random() > 0.4 ? 5 : -15;
-      Morale = Morale += SignsMorale;
+      GameState.Manpower = GameState.Manpower + 300;
     },
   },
+  {
+    name: "",
+    description: "",
+    effect() {},
+  },
+  {
+    name: "",
+    description: "",
+    effect() {},
+  },
+  {
+    name: "",
+    description: "",
+    effect() {},
+  },
 ];
-module.exports = { Eventcards, Manpower, Morale };
+module.exports = { Eventcards };
