@@ -8,6 +8,7 @@ const boldText = "\x1b[1m	";
 const whiteText = "\x1b[37m";
 const cyanHighlight = "\x1b[100m";
 const magText = "\x1b[35m";
+const BasicBlue = "\x1b[94m";
 
 module.exports = {
   yellowText,
@@ -17,6 +18,7 @@ module.exports = {
   resetText,
   cyanHighlight,
   boldText,
+  BasicBlue,
   grayText,
   magText,
   abilityText,
