@@ -25,3 +25,26 @@ startTurn(0, (turnNumber) => {
     "\n...as orders are carried out, the day draws to a close. \n Press Enter to continue:"
   );
 });
+
+/* Turn algorithm
+
+When the player orders and finishes moving his units
+The turn ends and a new turn begins
+
+there are 10 turns in one day
+
+Order -> Execution of order -> end of turn -> turn count updated -> Start new turn
+
+Logic
+Create an variable whos value is an object
+Object contains variable 'turn' 
+which updates everytime a player orders and actions are completed
+
+Function 'turn update' 
+Increases variable 'turn' by 1 after actions are completed
+
+At the beginning of player orders, display 'turn' to player on screen or terminal
+
+
+
+*/
