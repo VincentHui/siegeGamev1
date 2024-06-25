@@ -31,16 +31,14 @@ let PlayCards = [
     description:
       "Inflicts a hex on the Enemy. The next time the Enemy skips their turn, inflict massive damage.",
     effect() {
-      // GameState[MyTurn.currentplayer].Mana =
-      //   GameState[MyTurn.currentplayer].Mana - 1;
-      // GameState[NotMyTurn.notmyturn].WastrelsWrath =
-      //   GameState[NotMyTurn.notmyturn].WastrelsWrath + 1;
+      GameState[MyTurn.currentplayer].Mana =
+        GameState[MyTurn.currentplayer].Mana - 1;
+      GameState[NotMyTurn.notmyturn].WastrelsWrath =
+        GameState[NotMyTurn.notmyturn].WastrelsWrath + 1;
       console.log(
         `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}is Hexed! ${grayText} Wastrels Wrath +1 stack${resetText}`
       );
-      return {
-        Hex: "Wastrels Wrath",
-      };
+      return;
     },
   },
   {
