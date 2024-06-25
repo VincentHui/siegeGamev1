@@ -8,6 +8,7 @@ const {
   magText,
   boldText,
   abilityText,
+  lightred,
   BasicBlue,
   grayText,
   cyanHighlight,
@@ -50,19 +51,16 @@ const {
 
 function Alerts() {
   console.log(
-    `${yellowText}--------------------Player ${MyTurn.currentplayer}'s Turn ---------------------${resetText}`
-  );
-  console.log(
     `                ${BasicBlue}Player 1: ${greenText}${GameState[1].HP}${resetText} HP, ${greenText}${GameState[1].Mana}${resetText} MP`
   );
   if (GameState[1].WastrelsWrath > 0) {
     console.log(
-      `                ${grayText}Afflicted with x${GameState[1].WastrelsWrath} stack(s) of Wastrel's Wrath!`
+      `                 ${lightred}-Wastrel's Wrath ${grayText}x${GameState[1].WastrelsWrath}`
     );
   }
   if (GameState[1].bloodhex > 0) {
     console.log(
-      `                ${grayText}Afflicted with x${GameState[1].bloodhex} stack(s) of Bleeding!`
+      `                 ${lightred}-Bleeding ${grayText}x${GameState[1].bloodhex}`
     );
   }
   console.log(
@@ -70,12 +68,12 @@ function Alerts() {
   );
   if (GameState[2].WastrelsWrath > 0) {
     console.log(
-      `                ${grayText}Afflicted with x${GameState[2].WastrelsWrath} stack(s) of Wastrel's Wrath!`
+      `                 ${lightred}-Wastrel's Wrath ${grayText}x${GameState[2].WastrelsWrath}`
     );
   }
   if (GameState[2].bloodhex > 0) {
     console.log(
-      `                ${grayText}Afflicted with x${GameState[2].bloodhex} stack(s) of Bleeding!`
+      `                 ${lightred}-Bleeding ${grayText}x${GameState[2].bloodhex}`
     );
   }
 }

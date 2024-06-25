@@ -10,12 +10,19 @@ const {
 const { PlayCards } = require("./Cards.js");
 const { Alerts } = require("./Notifications.js");
 const { bleedingHex, wastrelHex } = require("./Hexes.js");
-const { GameState, MyTurn, NotMyTurn } = require("./GameState.js");
+const {
+  GameState,
+  MyTurn,
+  NotMyTurn,
+  playerprimary,
+  playersecondary,
+} = require("./GameState.js");
 const {
   yellowText,
   redText,
   greenText,
   whiteText,
+  lightred,
   resetText,
   magText,
   boldText,
@@ -49,6 +56,9 @@ function manyTurns(
     return;
   }
   currentTurn = currentTurn + 1;
+  console.log(
+    `${yellowText}--------------------Turn ${currentTurn}---------------------${resetText}`
+  );
   whosturn();
   notifs();
   ability();
@@ -74,22 +84,28 @@ function RandomCard() {
 }
 
 function PlayAbility() {
+  let whosturn = MyTurn.currentplayer;
+  whosturn =
+    whosturn === 1
+      ? console.log(`${BasicBlue}Player 1:${resetText}`)
+      : console.log(`${magText}Player 2:${resetText}`);
   if (GameState[MyTurn.currentplayer].Initiative < 1) {
     console.log(
-      `\n${yellowText}Player ${MyTurn.currentplayer}'s turn is skipped!${resetText}`
+      `...${playerprimary.who}Player ${MyTurn.currentplayer}'s ${yellowText}turn is skipped!${resetText}`
     );
     wastrelHex();
     return;
   }
   if (GameState[MyTurn.currentplayer].Mana < 1) {
     console.log(
-      `\n${redText}Player ${MyTurn.currentplayer} has no Mana!${greenText}Recover 2 Mana. ${resetText}`
+      `...${playerprimary.who}Player ${MyTurn.currentplayer} ${redText}has no Mana!${greenText}\n-Recover 2 Mana. ${resetText}`
     );
     GameState[MyTurn.currentplayer].Mana = GameState[1].Mana + 2;
   } else {
     const randomCard = RandomCard();
+
     console.log(
-      `\n${yellowText}Player ${MyTurn.currentplayer} plays:\n${abilityText}${randomCard.name} ${grayText}- ${randomCard.description}${grayText} Cost: -${randomCard.cost} MP ${randomCard.extracost} ${resetText}`
+      `${yellowText}${randomCard.name} ${resetText}${grayText}- ${randomCard.description}${grayText} Cost: -${randomCard.cost} MP ${randomCard.extracost} ${resetText}`
     );
     const effect = randomCard.effect();
   }
@@ -104,11 +120,15 @@ function changeTurn() {
   if (MyTurn.currentplayer === 2) {
     MyTurn.currentplayer = MyTurn.currentplayer - 1;
     NotMyTurn.notmyturn = NotMyTurn.notmyturn + 1;
+    playerprimary.who = `${BasicBlue}`;
+    playersecondary.who = `${magText}`;
     return;
   }
   if (MyTurn.currentplayer === 1) {
     MyTurn.currentplayer = MyTurn.currentplayer + 1;
     NotMyTurn.notmyturn = NotMyTurn.notmyturn - 1;
+    playerprimary.who = `${magText}`;
+    playersecondary.who = `${BasicBlue}`;
     return;
   }
 }

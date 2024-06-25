@@ -1,4 +1,10 @@
-const { GameState, MyTurn, NotMyTurn } = require("./GameState.js");
+const {
+  GameState,
+  MyTurn,
+  NotMyTurn,
+  playerprimary,
+  playersecondary,
+} = require("./GameState.js");
 const {
   diceRoll,
 } = require("../FutureVersion/CardSystem/examples/diceExample");
@@ -30,26 +36,26 @@ let PlayCards = [
       GameState[NotMyTurn.notmyturn].WastrelsWrath =
         GameState[NotMyTurn.notmyturn].WastrelsWrath + 1;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} afflicted with Wastrel Wrath x1${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}is Hexed! ${grayText} Wastrels Wrath +1 stack${resetText}`
       );
       return;
     },
   },
   {
     name: "Scorpion Wire",
-    cost: 2,
+    cost: 1,
     extracost: "",
     type: "Trickery",
     description: "Throw a scorpion wire to disrupt your Enemy.",
     effect() {
       GameState[MyTurn.currentplayer].Mana =
-        GameState[MyTurn.currentplayer].Mana - 2;
+        GameState[MyTurn.currentplayer].Mana - 1;
       GameState[NotMyTurn.notmyturn].Mana =
         GameState[NotMyTurn.notmyturn].Mana - 2;
       GameState[NotMyTurn.notmyturn].HP =
         GameState[NotMyTurn.notmyturn].HP - 15;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} loses -15 HP, -2 MP.${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -15 HP, -2 MP${resetText}`
       );
     },
   },
@@ -66,7 +72,7 @@ let PlayCards = [
       GameState[NotMyTurn.notmyturn].Mana =
         GameState[NotMyTurn.notmyturn].Mana - 4;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} loses -4 MP.${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -4 MP${resetText}`
       );
     },
   },
@@ -84,23 +90,23 @@ let PlayCards = [
         (GameState[MyTurn.currentplayer].Mana =
           GameState[MyTurn.currentplayer].Mana + ManaRecover);
       console.log(
-        `${greenText}Player ${MyTurn.currentplayer} restores +${HPRecover} HP and +${ManaRecover} Mana ${resetText}`
+        `...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}restores +${HPRecover} HP and +${ManaRecover} Mana ${resetText}`
       );
     },
   },
   {
     name: "White Nova",
-    cost: 3,
+    cost: 2,
     extracost: "",
     type: "Luminary Arts",
     description:
       "Unleash a massive flash of light, preventing the Enemy from declaring an ability on their next turn",
     effect() {
       GameState[MyTurn.currentplayer].Mana =
-        GameState[MyTurn.currentplayer].Mana - 3;
+        GameState[MyTurn.currentplayer].Mana - 2;
       GameState[NotMyTurn.notmyturn].Initiative = -2;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn}'s next turn is skipped!${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn}'s ${redText}next turn is skipped!${resetText}`
       );
     },
   },
@@ -117,13 +123,17 @@ let PlayCards = [
         GameState[MyTurn.currentplayer].HP + 100;
       GameState[MyTurn.currentplayer].Initiative = -2;
       if (GameState[MyTurn.currentplayer].WastrelsWrath > 0) {
-        console.log(`${greenText}-Wastrels Wrath cured.${resetText}`);
+        console.log(
+          `...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}Wastrels Wrath cured${resetText}`
+        );
       }
       if (GameState[MyTurn.currentplayer].bloodhex > 0) {
-        console.log(`${greenText}-Bleeding Hex cured.${resetText}`);
+        console.log(
+          `...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}Bleeding Hex cured${resetText}`
+        );
       }
       console.log(
-        `${greenText}-Player ${MyTurn.currentplayer} restores +100 HP. ${grayText}Your next turn is skipped.${resetText}`
+        `...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}restores +100 HP \n...${resetText}${playerprimary.who}Player ${MyTurn.currentplayer}'s${redText} next turn is skipped${resetText}`
       );
 
       GameState[MyTurn.currentplayer].WastrelsWrath = 0;
@@ -132,19 +142,19 @@ let PlayCards = [
   },
   {
     name: `Exceed: Execution`,
-    cost: 5,
+    cost: 4,
     extracost: "",
     type: "Corruption Arts",
     description: `Inflicts a huge amount of HP. ${grayText}Exceed abilities skip your next turn. ${resetText}`,
     effect() {
       GameState[MyTurn.currentplayer].Mana =
-        GameState[MyTurn.currentplayer].Mana - 5;
+        GameState[MyTurn.currentplayer].Mana - 4;
       const executionDMG = Math.floor(Math.random() * 50) + 25;
       GameState[MyTurn.currentplayer].Initiative = -2;
       GameState[NotMyTurn.notmyturn].HP =
         GameState[NotMyTurn.notmyturn].HP - executionDMG;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} loses -${executionDMG} HP. ${grayText} Your next turn is skipped. ${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -${executionDMG} HP \n${resetText}...${playerprimary.who}Player ${MyTurn.currentplayer}'s${redText} next turn is skipped${resetText}`
       );
     },
   },
@@ -163,7 +173,7 @@ let PlayCards = [
           GameState[NotMyTurn.notmyturn].HP - element;
 
         console.log(
-          `${redText}Player ${NotMyTurn.notmyturn} loses -${element} HP. ${resetText}`
+          `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -${element} HP ${resetText}`
         );
       });
     },
@@ -184,7 +194,7 @@ let PlayCards = [
       GameState[NotMyTurn.notmyturn].HP =
         GameState[NotMyTurn.notmyturn].HP - VampireBite;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} loses -${VampireBite} HP. ${greenText}Player ${MyTurn.currentplayer} restores +${VampireBite} HP. ${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -${VampireBite} HP${resetText} \n...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}restores +${VampireBite} HP ${resetText}`
       );
     },
   },
@@ -206,18 +216,18 @@ let PlayCards = [
         let difference =
           GameState[MyTurn.currentplayer].HP -
           GameState[NotMyTurn.notmyturn].HP;
-        let HeartseekerTotal = HeartseekerSum + difference;
+        let HeartseekerTotal = HeartseekerSum + difference - 5;
         GameState[NotMyTurn.notmyturn].HP =
           GameState[NotMyTurn.notmyturn].HP - HeartseekerTotal;
         console.log(
-          `${redText}Player ${NotMyTurn.notmyturn} loses -${HeartseekerTotal} HP.${resetText}`
+          `...${playersecondary.who}Player ${NotMyTurn.notmyturn}${redText} loses ${redText}-${HeartseekerTotal} HP${resetText}`
         );
         return;
       } else
         GameState[NotMyTurn.notmyturn].HP =
           GameState[NotMyTurn.notmyturn].HP - HeartseekerSum;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} loses -${HeartseekerSum} HP.${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -${HeartseekerSum} HP${resetText}`
       );
     },
   },
@@ -238,10 +248,32 @@ let PlayCards = [
       GameState[NotMyTurn.notmyturn].bloodhex =
         GameState[NotMyTurn.notmyturn].bloodhex + 1;
       console.log(
-        `${redText}Player ${NotMyTurn.notmyturn} afflicted with Bleeding Hex x1 ${resetText}`
+        `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}is Hexed! ${grayText} Bleeding +1 stack${resetText}`
       );
       return;
     },
   },
+  // {
+  //   name: `Quick Cut`,
+  //   cost: 1,
+  //   extracost: "",
+  //   type: "Trickery",
+  //   description:
+  //     "Draw blood from yourself to inflict a debilitating hex on the Enemy. Each subsequent turn inflicts damage over time.",
+  //   effect() {
+  //     GameState[MyTurn.currentplayer].Mana =
+  //       GameState[MyTurn.currentplayer].Mana - 2;
+
+  //     GameState[MyTurn.currentplayer].HP =
+  //       GameState[MyTurn.currentplayer].HP - 10;
+
+  //     GameState[NotMyTurn.notmyturn].bloodhex =
+  //       GameState[NotMyTurn.notmyturn].bloodhex + 1;
+  //     console.log(
+  //       `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}is Hexed! ${grayText} Bleeding +1 stack${resetText}`
+  //     );
+  //     return;
+  //   },
+  // },
 ];
 module.exports = { PlayCards };

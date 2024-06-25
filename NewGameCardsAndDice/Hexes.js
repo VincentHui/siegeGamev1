@@ -1,4 +1,10 @@
-const { GameState, MyTurn, NotMyTurn } = require("./GameState.js");
+const {
+  GameState,
+  MyTurn,
+  NotMyTurn,
+  playerprimary,
+  playersecondary,
+} = require("./GameState.js");
 const {
   yellowText,
   redText,
@@ -19,7 +25,7 @@ function bleedingHex() {
     GameState[MyTurn.currentplayer].HP =
       GameState[MyTurn.currentplayer].HP - bloodhexdmg;
     console.log(
-      `${redText}Player ${MyTurn.currentplayer} is bleeding! -${bloodhexdmg} HP.${resetText}`
+      `...${playerprimary.who}Player ${MyTurn.currentplayer} ${redText}is Bleeding! -${bloodhexdmg} HP.${resetText}`
     );
   }
   if (GameState[NotMyTurn.notmyturn].bloodhex > 0) {
@@ -27,7 +33,7 @@ function bleedingHex() {
     GameState[NotMyTurn.notmyturn].HP =
       GameState[NotMyTurn.notmyturn].HP - bloodhexdmg;
     console.log(
-      `${redText}Player ${NotMyTurn.notmyturn} is bleeding! -${bloodhexdmg} HP.${resetText}`
+      `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}is Bleeding! -${bloodhexdmg} HP.${resetText}`
     );
   }
 }
@@ -39,7 +45,7 @@ function wastrelHex() {
       GameState[MyTurn.currentplayer].HP =
         GameState[MyTurn.currentplayer].HP - wastreldmg;
       console.log(
-        `${redText}Wastrels Wrath triggers! Player ${MyTurn.currentplayer} loses -${wastreldmg} HP.${resetText}`
+        `${redText}-Wastrels Wrath triggers! Player ${MyTurn.currentplayer} loses -${wastreldmg} HP.${resetText}`
       );
       GameState[MyTurn.currentplayer].WastrelsWrath = 0;
     }
