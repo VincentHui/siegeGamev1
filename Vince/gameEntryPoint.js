@@ -28,9 +28,8 @@ const { ask } = require("../common/askPromise.js");
 require("./Notification.js");
 
 const MAXTURN = 10;
-const eventTable = {};
 
-const Players = [{ name: "the first" }, { name: "the second" }];
+const Players = [{ name: "sam" }, { name: "ben" }, { name: "vince" }];
 
 const GameLoop = async () => {
   await ask("Enter input to start ");
@@ -40,15 +39,15 @@ const GameLoop = async () => {
   while (turn < MAXTURN) {
     turn++;
     console.log({ turn });
-    //go through each players turn
+
+    displayArray(["ass", "balls", "assballs"]);
 
     for (let index = 0; index < Players.length; index++) {
       const player = Players[index];
-      await ask(`player "${player.name}" enter a command`);
+      const answer = await ask(`player "${player.name}" enter a command`);
     }
 
     if (turn >= MAXTURN) {
-      console.log("max reached");
       pubsub.publish("max turn reached");
       break;
     }
