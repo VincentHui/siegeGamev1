@@ -7,6 +7,11 @@ function diceRoll(diceAmount, diceSides) {
   return results;
 }
 
+function rollOneDice(diceSides) {
+  return diceRoll(1, diceSides)[0];
+}
+
 module.exports = {
   diceRoll,
+  rollOneDice,
 };
