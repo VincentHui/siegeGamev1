@@ -45,20 +45,16 @@ const playerCommands = [
   {
     name: "shoot",
     effect: async (playerInstigator, players) => {
-      console.log(players);
       const targets = players.filter(
         (target) => target.name !== playerInstigator.name
       );
-      console.log(targets);
       var target = {};
       if (playerInstigator.ai) {
-        console.log(rollOneDice(targets.length) - 1);
         target = targets[rollOneDice(targets.length) - 1];
       }
       if (!playerInstigator.ai) {
         target = await userArraySelect(targets);
       }
-      console.log(target);
       ShootPlayer(playerInstigator, target);
     },
   },
