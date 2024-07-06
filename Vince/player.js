@@ -29,33 +29,42 @@ async function userArraySelect(playerCommands) {
 
 const ShootPlayer = (shooter, target) => {
   shooter.bullets--;
-  target.health--;
 
   console.log(`${shooter.name} has shot ${target.name}`);
   console.log(`${shooter.name} has ${shooter.bullets} bullets left`);
+  if (target.defense) {
+    console.log(`${target.name} has used defense and receives no damage`);
+    console.log(`${target.name} has ${target.health} health left`);
+    return;
+  }
+  target.health--;
   console.log(`${target.name} has ${target.health} health left`);
 };
 
 const playerCommands = [
   {
     name: "shoot",
-    effect: async (playerInstigator) => {
-      const targets = Players.filter(
-        (players) => players.name !== playerInstigator.name
+    effect: async (playerInstigator, players) => {
+      console.log(players);
+      const targets = players.filter(
+        (target) => target.name !== playerInstigator.name
       );
+      console.log(targets);
       var target = {};
       if (playerInstigator.ai) {
+        console.log(rollOneDice(targets.length) - 1);
         target = targets[rollOneDice(targets.length) - 1];
       }
       if (!playerInstigator.ai) {
         target = await userArraySelect(targets);
       }
+      console.log(target);
       ShootPlayer(playerInstigator, target);
     },
   },
   {
     name: "reload",
-    effect: async (playerInstigator) => {
+    effect: async (playerInstigator, players) => {
       playerInstigator.bullets++;
       console.log(
         `${playerInstigator.name} has loaded another bullet... ${playerInstigator.name} has ${playerInstigator.bullets} bullets`
@@ -64,7 +73,7 @@ const playerCommands = [
   },
   {
     name: "defend",
-    effect: async (playerInstigator) => {
+    effect: async (playerInstigator, players) => {
       playerInstigator.defense = 1;
       console.log(`${playerInstigator.name} has defended themselves...`);
     },
@@ -117,4 +126,5 @@ module.exports = {
   PlayerTakesTurn,
   Players,
   GetAllPlayerComands,
+  playerCommands,
 };

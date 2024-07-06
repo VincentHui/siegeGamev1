@@ -1,7 +1,5 @@
 let critcounter = 0;
-const {
-  diceRoll,
-} = require("../FutureVersion/CardSystem/examples/diceExample");
+const { diceRoll } = require("../common/dice");
 
 // const readline = require("readline").createInterface({
 //   input: process.stdin,

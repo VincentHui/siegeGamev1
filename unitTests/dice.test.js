@@ -1,6 +1,4 @@
-const {
-  diceRoll,
-} = require("../FutureVersion/CardSystem/examples/diceExample");
+const { diceRoll } = require("../common/dice");
 
 test("if 2 dice are rolled result array should always be 2", () => {
   let totalCalls = 0;

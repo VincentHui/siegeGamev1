@@ -5,9 +5,7 @@ const {
   playerprimary,
   playersecondary,
 } = require("./GameState.js");
-const {
-  diceRoll,
-} = require("../FutureVersion/CardSystem/examples/diceExample");
+const { diceRoll } = require("../common/dice");
 const {
   yellowText,
   redText,
