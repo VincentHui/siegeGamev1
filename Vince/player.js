@@ -9,12 +9,6 @@ const {
 const { rollOneDice } = require("../common/dice.js");
 const { wait } = require("../common/wait.js");
 
-const Players = [
-  { name: "sam", color: redText, ai: true, bullets: 1, health: 2 },
-  { name: "ben", color: BasicBlue, ai: true, bullets: 1, health: 2 },
-  { name: "callum", color: yellowText, ai: true, bullets: 1, health: 2 },
-];
-
 async function userArraySelect(playerCommands) {
   const result = await navigateArray(playerCommands, (index, elements) => {
     readline.moveCursor(process.stdout, 0, -2);
@@ -108,19 +102,36 @@ const PlayerTakesTurn = async (player) => {
   return result;
 };
 
-const GetAllPlayerComands = async () => {
-  const commands = [];
-  for (let index = 0; index < Players.length; index++) {
-    const player = Players[index];
+const GetAllPlayerComands = async (players) => {
+  const playerCommands = [];
+  for (let index = 0; index < players.length; index++) {
+    const player = players[index];
     const playerCommand = await PlayerTakesTurn(player);
-    commands.push({ command: playerCommand, player });
+    playerCommands.push({ command: playerCommand, player });
   }
-  return commands;
+  playerCommands.sort(SortPlayerCommands);
+  return playerCommands;
+};
+
+const SortPlayerCommands = (a, b) => {
+  if (a.command.name === "defend" && b.command.name !== "defend") {
+    return -1; // a comes before b
+  }
+  if (a.command.name !== "defend" && b.command.name === "defend") {
+    return 1; // b comes before a
+  }
+  if (a.command.name < b.command.name) {
+    return -1; // a comes before b alphabetically
+  }
+  if (a.command.name > b.command.name) {
+    return 1; // b comes before a alphabetically
+  }
+  return 0; // a and b are equal
 };
 
 module.exports = {
   PlayerTakesTurn,
-  Players,
   GetAllPlayerComands,
   playerCommands,
+  SortCommands: SortPlayerCommands,
 };
