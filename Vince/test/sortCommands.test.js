@@ -1,4 +1,4 @@
-const { playerCommands, SortCommands } = require("../player");
+const { playerCommands, SortCommands } = require("../Player/player");
 const {
   redText,
   yellowText,

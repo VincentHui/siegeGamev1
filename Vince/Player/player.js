@@ -1,25 +1,14 @@
-const { navigateArray } = require("./readArray.js");
+const { navigateArray } = require("../readArray.js");
 const readline = require("readline");
 const {
   redText,
   yellowText,
   BasicBlue,
   resetText,
-} = require("../common/colors.js");
-const { rollOneDice } = require("../common/dice.js");
-const { wait } = require("../common/wait.js");
-
-async function userArraySelect(playerCommands) {
-  const result = await navigateArray(playerCommands, (index, elements) => {
-    readline.moveCursor(process.stdout, 0, -2);
-    readline.clearScreenDown(process.stdout);
-    console.log(`${elements.map((el, i) => `[${i === index ? "*" : ""}]`)}`);
-    console.log(elements[index]);
-  });
-  readline.moveCursor(process.stdout, 0, -2);
-  readline.clearScreenDown(process.stdout);
-  return result;
-}
+} = require("../../common/colors.js");
+const { rollOneDice } = require("../../common/dice.js");
+const { wait } = require("../../common/wait.js");
+const { targetSelect, commandSelect } = require("../Player/userInteraction.js");
 
 const ShootPlayer = (shooter, target) => {
   shooter.bullets--;
@@ -47,7 +36,7 @@ const playerCommands = [
         target = targets[rollOneDice(targets.length) - 1];
       }
       if (!playerInstigator.ai) {
-        target = await userArraySelect(targets);
+        target = playerInstigator.target;
       }
       ShootPlayer(playerInstigator, target);
     },
@@ -70,34 +59,44 @@ const playerCommands = [
   },
 ];
 
-const SelectCommandInteractive = async (playerCommands, player) => {
+const SelectCommandInteractive = async (playerCommands, player, players) => {
   console.log("select");
   console.log(`${playerCommands.map((el, i) => `[${i === 0 ? "*" : ""}]`)}`);
-  console.log(playerCommands[0]);
+  console.log(playerCommands[0].name);
 
-  const result = await userArraySelect(playerCommands);
-  console.log(`${player.name} chose to ${result}`);
+  const result = await commandSelect(playerCommands, player, players);
+  console.log(`${player.name} has chosen`);
   return result;
 };
 
-const SelectCommandAI = async (playerCommands, player) => {
+const SelectCommandAI = async (playerCommands, player, players) => {
+  const HasBullets = player.bullets > 0;
+
+  playerCommands = playerCommands.filter((cmd) => {
+    return HasBullets ? true : cmd.name !== "shoot";
+  });
+
   const commandIndex = rollOneDice(playerCommands.length) - 1;
   const randomTime = rollOneDice(4000) + 500;
 
   console.log(`${player.name} is choosing...`);
   await wait(randomTime);
+  if (playerCommands[commandIndex].name === "shoot") {
+    const targets = players.filter((target) => target.name !== player.name);
+    player.target = targets[rollOneDice(targets.length) - 1];
+  }
   console.log(`${player.name} has chosen`);
   return playerCommands[commandIndex];
 };
 
-const PlayerTakesTurn = async (player) => {
+const PlayerTakesTurn = async (player, Players) => {
   console.log(`${player.color}${player.name}  :  turn`);
   let result = {};
   if (player.ai) {
-    result = await SelectCommandAI(playerCommands, player);
+    result = await SelectCommandAI(playerCommands, player, Players);
   }
   if (!player.ai) {
-    result = await SelectCommandInteractive(playerCommands, player);
+    result = await SelectCommandInteractive(playerCommands, player, Players);
   }
   return result;
 };
@@ -106,7 +105,7 @@ const GetAllPlayerComands = async (players) => {
   const playerCommands = [];
   for (let index = 0; index < players.length; index++) {
     const player = players[index];
-    const playerCommand = await PlayerTakesTurn(player);
+    const playerCommand = await PlayerTakesTurn(player, players);
     playerCommands.push({ command: playerCommand, player });
   }
   playerCommands.sort(SortPlayerCommands);
@@ -132,6 +131,6 @@ const SortPlayerCommands = (a, b) => {
 module.exports = {
   PlayerTakesTurn,
   GetAllPlayerComands,
-  playerCommands,
-  SortCommands: SortPlayerCommands,
+  commandSelect,
+  SortPlayerCommands,
 };

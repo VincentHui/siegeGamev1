@@ -2,21 +2,23 @@ const { pubsub } = require("../common/pubSub.js");
 const { ask } = require("../common/askPromise.js");
 const { wait } = require("../common/wait.js");
 require("./Notification.js");
-const { GetAllPlayerComands } = require("./player.js");
+const { GetAllPlayerComands } = require("./Player/player.js");
 const {
   resetText,
   redText,
   BasicBlue,
   yellowText,
+  greenText,
 } = require("../common/colors.js");
 const { startLoader } = require("../common/loader.js");
 
-const MAXTURN = 10;
+const MAXTURN = 100;
 
 let Players = [
-  { name: "sam", color: redText, ai: true, bullets: 1, health: 2 },
-  { name: "ben", color: BasicBlue, ai: true, bullets: 1, health: 2 },
-  { name: "callum", color: yellowText, ai: true, bullets: 1, health: 2 },
+  { name: "sam", color: redText, ai: true, bullets: 0, health: 2 },
+  { name: "ben", color: BasicBlue, ai: true, bullets: 0, health: 2 },
+  { name: "callum", color: yellowText, ai: true, bullets: 0, health: 2 },
+  { name: "vince", color: greenText, ai: false, bullets: 0, health: 2 },
 ];
 
 const GameLoop = async () => {
@@ -51,6 +53,20 @@ const GameLoop = async () => {
       return playerAlive;
     });
     await wait(2000);
+    if (Players.length === 1) {
+      console.log();
+      console.log(
+        `${Players[0].color}${Players[0].name}${resetText} is the last one standing...`
+      );
+      await wait(2000);
+      process.exit();
+    }
+    if (Players.length === 0) {
+      console.log();
+      console.log(`all have failed the trial of the bullet...`);
+      await wait(2000);
+      process.exit();
+    }
     if (turn >= MAXTURN) {
       pubsub.publish("max turn reached");
       process.exit();
