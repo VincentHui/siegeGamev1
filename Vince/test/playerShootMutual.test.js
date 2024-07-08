@@ -6,8 +6,7 @@ const {
   resetText,
 } = require("../../common/colors");
 
-test("defend against a player shooting", () => {
-  const defend = playerCommands.filter((cmd) => cmd.name === "defend")[0];
+test("return fire against a player", () => {
   const playerTarget = {
     name: "target",
     color: redText,
@@ -15,8 +14,6 @@ test("defend against a player shooting", () => {
     bullets: 0,
     health: 1,
   };
-  defend.effect(playerTarget);
-
   const playerShooter = {
     name: "shooter",
     color: BasicBlue,
@@ -26,7 +23,9 @@ test("defend against a player shooting", () => {
     health: 1,
   };
   const shoot = playerCommands.filter((cmd) => cmd.name === "shoot")[0];
+  playerTarget.target = playerShooter;
   playerShooter.target = playerTarget;
+
   shoot.effect(playerShooter);
   expect(playerShooter.bullets).toBe(0);
   expect(playerTarget.health).toBe(1);

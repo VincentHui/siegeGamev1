@@ -13,7 +13,7 @@ async function userArraySelect(array) {
   return result;
 }
 
-async function commandSelect(playerCommands, player, players) {
+async function playerCommandSelect(playerCommands, player, players) {
   while (true) {
     const result = await navigateArray(playerCommands, (index, elements) => {
       readline.moveCursor(process.stdout, 0, -2);
@@ -51,8 +51,19 @@ async function targetSelect(players) {
   return result;
 }
 
+const SelectCommandInteractive = async (playerCommands, player, players) => {
+  console.log("select");
+  console.log(`${playerCommands.map((el, i) => `[${i === 0 ? "*" : ""}]`)}`);
+  console.log(playerCommands[0].name);
+
+  const result = await playerCommandSelect(playerCommands, player, players);
+  console.log(`${player.name} has chosen`);
+  return result;
+};
+
 module.exports = {
   userArraySelect,
-  commandSelect,
+  playerCommandSelect,
   targetSelect,
+  SelectCommandInteractive,
 };

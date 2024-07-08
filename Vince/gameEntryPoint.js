@@ -2,7 +2,10 @@ const { pubsub } = require("../common/pubSub.js");
 const { ask } = require("../common/askPromise.js");
 const { wait } = require("../common/wait.js");
 require("./Notification.js");
-const { GetAllPlayerComands } = require("./Player/player.js");
+const {
+  GetAllPlayersChosenCommands,
+  playerCommands,
+} = require("./Player/player.js");
 const {
   resetText,
   redText,
@@ -15,10 +18,38 @@ const { startLoader } = require("../common/loader.js");
 const MAXTURN = 100;
 
 let Players = [
-  { name: "sam", color: redText, ai: true, bullets: 0, health: 2 },
-  { name: "ben", color: BasicBlue, ai: true, bullets: 0, health: 2 },
-  { name: "callum", color: yellowText, ai: true, bullets: 0, health: 2 },
-  { name: "vince", color: greenText, ai: false, bullets: 0, health: 2 },
+  {
+    name: "sam",
+    color: redText,
+    ai: true,
+    bullets: 0,
+    health: 2,
+    target: null,
+  },
+  {
+    name: "ben",
+    color: BasicBlue,
+    ai: true,
+    bullets: 0,
+    health: 2,
+    target: null,
+  },
+  {
+    name: "callum",
+    color: yellowText,
+    ai: true,
+    bullets: 0,
+    health: 2,
+    target: null,
+  },
+  {
+    name: "vince",
+    color: greenText,
+    ai: false,
+    bullets: 0,
+    health: 2,
+    target: null,
+  },
 ];
 
 const GameLoop = async () => {
@@ -31,17 +62,21 @@ const GameLoop = async () => {
     turn++;
     console.log();
     console.log({ turn });
-    const playerCommands = await GetAllPlayerComands(Players);
+    const chosenCommands = await GetAllPlayersChosenCommands(
+      Players,
+      playerCommands
+    );
     console.log();
-    for (cmd of playerCommands) {
+    for (cmd of chosenCommands) {
       console.log(
         `${cmd.player.color}${cmd.player.name} chooses ${cmd.command.name}${resetText}`
       );
-      await cmd.command.effect(cmd.player, Players);
+      await cmd.command.effect(cmd.player);
       await wait(1000);
     }
     for (player of Players) {
       player.defense = 0;
+      player.target = null;
     }
 
     Players = Players.filter((player) => {

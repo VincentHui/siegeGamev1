@@ -1,4 +1,4 @@
-const { playerCommands, SortCommands } = require("../Player/player");
+const { playerCommands, SortPlayerCommands } = require("../Player/player");
 const {
   redText,
   yellowText,
@@ -30,7 +30,7 @@ test("sort commands to make defense first", () => {
   commands.push({ command: reload, playerShooter });
   commands.push({ command: shoot, playerShooter });
   commands.push({ command: defend, playerTarget });
-  commands.sort(SortCommands);
-  console.log(commands);
+  commands.sort(SortPlayerCommands);
+  //   console.log(commands);
   expect(commands[0].command.name).toBe(defend.name);
 });
