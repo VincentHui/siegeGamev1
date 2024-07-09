@@ -4,9 +4,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const {
-  diceRoll,
-} = require("../FutureVersion/CardSystem/examples/diceExample");
+const { diceRoll } = require("../common/dice");
 const { PlayCards } = require("./Cards.js");
 const { Alerts } = require("./Notifications.js");
 const { bleedingHex, wastrelHex } = require("./Hexes.js");
