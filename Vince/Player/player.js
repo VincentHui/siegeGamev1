@@ -14,8 +14,7 @@ const ShootPlayer = (shooter) => {
     console.log(`${target.name} has ${target.health} health left`);
     return;
   }
-  console.log(target);
-  if (target.target.name === shooter.name) {
+  if (target.target && target.target.name === shooter.name) {
     console.log(`${target.name} has returned fire and receives no damage`);
     console.log(`${target.name} has ${target.health} health left`);
     return;
