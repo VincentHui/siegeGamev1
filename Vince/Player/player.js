@@ -1,7 +1,6 @@
-const { rollOneDice } = require("../../common/dice.js");
-const { wait } = require("../../common/wait.js");
 const { SelectCommandInteractive } = require("../Player/userInteraction.js");
 const { SelectCommandAI } = require("../Player/aiInteraction.js");
+const { pubsub } = require("../../common/pubSub.js");
 
 const ShootPlayer = (shooter) => {
   shooter.bullets--;
@@ -12,15 +11,18 @@ const ShootPlayer = (shooter) => {
   if (target.defense) {
     console.log(`${target.name} has used defense and receives no damage`);
     console.log(`${target.name} has ${target.health} health left`);
+    pubsub.publish("targetDefendedFire", { shooter, target });
     return;
   }
   if (target.target && target.target.name === shooter.name) {
     console.log(`${target.name} has returned fire and receives no damage`);
     console.log(`${target.name} has ${target.health} health left`);
+    pubsub.publish("targetReturnedFire", { shooter, target });
     return;
   }
   target.health--;
   console.log(`${target.name} has ${target.health} health left`);
+  pubsub.publish("playerShotTarget", { shooter, target });
 };
 
 const playerCommands = [
@@ -37,6 +39,7 @@ const playerCommands = [
       console.log(
         `${playerInstigator.name} has loaded another bullet... ${playerInstigator.name} has ${playerInstigator.bullets} bullets`
       );
+      pubsub.publish("playerReloaded", { player: playerInstigator });
     },
   },
   {
@@ -44,11 +47,13 @@ const playerCommands = [
     effect: async (playerInstigator) => {
       playerInstigator.defense = 1;
       console.log(`${playerInstigator.name} has defended themselves...`);
+      pubsub.publish("playerDefended", { player: playerInstigator });
     },
   },
 ];
 
 const PlayerTakesTurn = async (player, Players, playerCommands) => {
+  pubsub.publish("playerTakesTurn", { player });
   console.log(`${player.color}${player.name}  :  turn`);
   let result = {};
   if (player.ai) {

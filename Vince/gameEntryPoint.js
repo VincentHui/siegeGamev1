@@ -14,6 +14,7 @@ const {
   greenText,
 } = require("../common/colors.js");
 const { startLoader } = require("../common/loader.js");
+const { ChooseWeapon } = require("./Weapons/chooseWeapon.js");
 
 const MAXTURN = 100;
 
@@ -25,6 +26,7 @@ let Players = [
     bullets: 0,
     health: 2,
     target: null,
+    inventory: [],
   },
   {
     name: "ben",
@@ -33,6 +35,7 @@ let Players = [
     bullets: 0,
     health: 2,
     target: null,
+    inventory: [],
   },
   {
     name: "callum",
@@ -41,6 +44,7 @@ let Players = [
     bullets: 0,
     health: 2,
     target: null,
+    inventory: [],
   },
   {
     name: "vince",
@@ -49,6 +53,7 @@ let Players = [
     bullets: 0,
     health: 2,
     target: null,
+    inventory: [],
   },
 ];
 
@@ -57,11 +62,16 @@ const GameLoop = async () => {
   await startLoader(3000);
   pubsub.publish("start");
 
+  for (const player of Players) {
+    await ChooseWeapon(player, player.ai);
+  }
+
   let turn = 0;
   while (turn < MAXTURN) {
     turn++;
     console.log();
     console.log({ turn });
+    pubsub.publish("newTurn", { turn });
     const chosenCommands = await GetAllPlayersChosenCommands(
       Players,
       playerCommands
@@ -81,10 +91,12 @@ const GameLoop = async () => {
 
     Players = Players.filter((player) => {
       const playerAlive = player.health > 0;
-      if (!playerAlive)
+      if (!playerAlive) {
         console.log(
           `${player.color}${player.name} has fallen to their wounds... ${resetText}`
         );
+        pubsub.publish("playerDied", player);
+      }
       return playerAlive;
     });
     await wait(2000);
@@ -93,12 +105,14 @@ const GameLoop = async () => {
       console.log(
         `${Players[0].color}${Players[0].name}${resetText} is the last one standing...`
       );
+      pubsub.publish("playerSurvived", Players[0]);
       await wait(2000);
       process.exit();
     }
     if (Players.length === 0) {
       console.log();
       console.log(`all have failed the trial of the bullet...`);
+      pubsub.publish("allHaveDied");
       await wait(2000);
       process.exit();
     }
@@ -106,6 +120,7 @@ const GameLoop = async () => {
       pubsub.publish("max turn reached");
       process.exit();
     }
+    pubsub.publish("endTurn", { turn });
   }
 };
 GameLoop();
