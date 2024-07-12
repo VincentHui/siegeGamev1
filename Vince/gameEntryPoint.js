@@ -66,12 +66,19 @@ const GameLoop = async () => {
     await ChooseWeapon(player, player.ai);
   }
 
+  pubsub.publish("playersChosen", Players);
+
   let turn = 0;
   while (turn < MAXTURN) {
     turn++;
     console.log();
     console.log({ turn });
     pubsub.publish("newTurn", { turn });
+
+    Players = Players.filter((player) => {
+      return player.health > 0;
+    });
+
     const chosenCommands = await GetAllPlayersChosenCommands(
       Players,
       playerCommands
@@ -88,17 +95,20 @@ const GameLoop = async () => {
       player.defense = 0;
       player.target = null;
     }
+    Players.forEach((player) => {
+      if (player.health <= 0) {
+        pubsub.publish("playerDied", { deadplayer: player, players: Players });
+      }
+    });
 
-    Players = Players.filter((player) => {
-      const playerAlive = player.health > 0;
-      if (!playerAlive) {
+    Players.forEach((player) => {
+      if (player.health <= 0) {
         console.log(
           `${player.color}${player.name} has fallen to their wounds... ${resetText}`
         );
-        pubsub.publish("playerDied", player);
       }
-      return playerAlive;
     });
+
     await wait(2000);
     if (Players.length === 1) {
       console.log();

@@ -6,11 +6,12 @@ function navigateArray(elements, onNavigate) {
 
     // Keypress event handler
     function handleKeypress(str, key) {
+      const prevIndex = currentIndex;
       if (key.name === "left") {
         // Navigate left
         if (currentIndex > 0) {
           currentIndex--;
-          onNavigate(currentIndex, elements);
+          onNavigate(currentIndex, elements, prevIndex);
         }
         return;
       }
@@ -18,7 +19,7 @@ function navigateArray(elements, onNavigate) {
         // Navigate right
         if (currentIndex < elements.length - 1) {
           currentIndex++;
-          onNavigate(currentIndex, elements);
+          onNavigate(currentIndex, elements, prevIndex);
         }
         return;
       }
