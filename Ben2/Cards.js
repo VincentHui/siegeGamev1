@@ -198,26 +198,25 @@ let PlayCards = [
       });
     },
   },
-  // {
-  //   name: `Vampire Bite`,
-  //   cost: 2,
-  //   extracost: "",
-  //   type: "Corruption Arts",
-  //   description:
-  //     "Inflict a random amount of damage, also gaining the same amount of HP.",
-  //   effect() {
-  //     GameState[MyTurn.currentplayer].Mana =
-  //       GameState[MyTurn.currentplayer].Mana - 2;
-  //     const VampireBite = Math.floor(Math.random() * 30) + 15;
-  //     GameState[MyTurn.currentplayer].HP =
-  //       GameState[MyTurn.currentplayer].HP + VampireBite;
-  //     GameState[NotMyTurn.notmyturn].HP =
-  //       GameState[NotMyTurn.notmyturn].HP - VampireBite;
-  //     console.log(
-  //       `...${playersecondary.who}Player ${NotMyTurn.notmyturn} ${redText}loses -${VampireBite} HP${resetText} \n...${playerprimary.who}Player ${MyTurn.currentplayer} ${greenText}restores +${VampireBite} HP ${resetText}`
-  //     );
-  //   },
-  // },
+  {
+    name: `Vampire Bite`,
+    cost: 2,
+    extracost: "",
+    targetskill: `yes`,
+    type: "Corruption Arts",
+    description: `${grayText}Inflict a random amount of damage, also gaining the same amount of HP. ${grayText}Cost: -2 MP`,
+    effect: async (user) => {
+      user.mana--;
+      user.mana--;
+      const target = user.target;
+      const VampireBite = Math.floor(Math.random() * 30) + 15;
+      user.health = user.health + VampireBite;
+      target.health = target.health - VampireBite;
+      console.log(
+        `${user.color}${user.name}${resetText} uses ${abilityText}Vampire Bite${resetText}... ${target.color}${target.name} ${redText}loses -${VampireBite} HP${resetText} and ${user.color}${user.name}${resetText} ${greenText}restores +${VampireBite} HP ${resetText}`
+      );
+    },
+  },
   // {
   //   name: `Heart Seeker`,
   //   cost: 1,
