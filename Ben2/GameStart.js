@@ -71,8 +71,10 @@ const GameLoop = async () => {
     Players.filter((player) => {
       const deadPlayers = [];
       for (let index = Players.length - 1; index >= 0; index--) {
-        if (Players[index].health < 0) {
-          console.log(`Someone has fallen to their wounds... ${resetText}`);
+        if (Players[index].health < 1) {
+          console.log(
+            `${Players[index].name} has fallen to their wounds... ${resetText}`
+          );
           deadPlayers.push(...Players.splice(index, 1));
         }
       }
@@ -86,6 +88,21 @@ const GameLoop = async () => {
       await wait(2000);
       process.exit();
     }
+
+    function getUniqueTeams(Players) {
+      return new Set(Players.map((player) => player.team));
+    }
+
+    async function checkForWinner(Players) {
+      const uniqueTeams = getUniqueTeams(Players);
+      if (uniqueTeams.size === 1) {
+        const winningTeam = [...uniqueTeams][0];
+        console.log();
+        console.log(`${yellowText}Team ${winningTeam} has won!`);
+        process.exit();
+      }
+    }
+    checkForWinner(Players);
     if (Players.length === 0) {
       console.log();
       console.log(`all have failed the trial of magic...`);

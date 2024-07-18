@@ -48,7 +48,10 @@ async function playerCommandSelect(playerCommands, player, players) {
     //   continue;
     // }
     if (result.targetskill === `yes`) {
-      const targets = players.filter((target) => target.name !== player.name);
+      let targets = players.filter((target) => target.name !== player.name);
+      if (player.team) {
+        targets = targets.filter((target) => target.team !== player.team);
+      }
       console.log(
         `${player.color}${targets.map((el, i) => `[${i === 0 ? "*" : ""}]`)}`
       );

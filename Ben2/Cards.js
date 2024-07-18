@@ -209,11 +209,11 @@ let PlayCards = [
       user.mana--;
       user.mana--;
       const target = user.target;
-      const VampireBite = Math.floor(Math.random() * 30) + 15;
+      const VampireBite = Math.floor(Math.random() * 15) + 10;
       user.health = user.health + VampireBite;
       target.health = target.health - VampireBite;
       console.log(
-        `${user.color}${user.name}${resetText} uses ${abilityText}Vampire Bite${resetText}... ${target.color}${target.name} ${redText}loses -${VampireBite} HP${resetText} and ${user.color}${user.name}${resetText} ${greenText}restores +${VampireBite} HP ${resetText}`
+        `${user.color}${user.name}${resetText} uses ${abilityText}Vampire Bite${resetText}... ${target.color}${target.name} ${redText}loses -${VampireBite} HP${resetText}, ${user.color}${user.name}${resetText} ${greenText}restores +${VampireBite} HP ${resetText}`
       );
     },
   },

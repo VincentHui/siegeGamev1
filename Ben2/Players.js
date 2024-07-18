@@ -21,7 +21,7 @@ const MAXTURN = 20;
 
 let Players = [
   // {
-  //   name: "sam",
+  //   name: "Sam",
   //   color: redText,
   //   ai: true,
   // skipped: false,
@@ -30,9 +30,10 @@ let Players = [
   //   target: null,
   // items: [],
   // initiative: 1
+  // team: `Dangerous`,
   // },
   {
-    name: "ben",
+    name: "Ben",
     color: BasicBlue,
     ai: false,
     skipped: false,
@@ -41,9 +42,10 @@ let Players = [
     target: null,
     items: [],
     initiative: 1,
+    team: `Amazing`,
   },
   {
-    name: "callum",
+    name: "Callum",
     color: yellowText,
     ai: true,
     skipped: false,
@@ -52,20 +54,22 @@ let Players = [
     target: null,
     items: [],
     initiative: 1,
+    team: `Cows`,
   },
   {
-    name: "vince",
+    name: "Vince",
     color: greenText,
     ai: true,
     skipped: false,
-    health: 100,
+    health: 10,
     mana: 10,
     target: null,
     items: [],
     initiative: 1,
+    team: `Trash`,
   },
   // {
-  //   name: "orc",
+  //   name: "Orc",
   //   color: grayText,
   //   ai: true,
   // skipped: false,
@@ -73,6 +77,7 @@ let Players = [
   //   mana: 0,
   //   target: null,
   // initiative: 1
+  // team: ``,
   // },
 ];
 

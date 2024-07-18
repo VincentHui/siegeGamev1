@@ -15,7 +15,10 @@ const SelectCommandAI = async (playerCommands, player, players) => {
   console.log(`${player.name} is choosing...`);
   await wait(randomTime);
   if (playerCommands[commandIndex].targetskill === `yes`) {
-    const targets = players.filter((target) => target.name !== player.name);
+    let targets = players.filter((target) => target.name !== player.name);
+    if (player.team) {
+      targets = targets.filter((target) => target.team !== player.team);
+    }
     player.target = targets[rollOneDice(targets.length) - 1];
   }
   console.log(`${player.name} has chosen`);
