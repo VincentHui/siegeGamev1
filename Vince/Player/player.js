@@ -2,7 +2,7 @@ const { SelectCommandInteractive } = require("../Player/userInteraction.js");
 const { SelectCommandAI } = require("../Player/aiInteraction.js");
 const { pubsub } = require("../../common/pubSub.js");
 
-const ShootPlayer = (shooter) => {
+const ShootPlayer = async (shooter) => {
   shooter.bullets--;
   const target = shooter.target;
 
@@ -11,7 +11,7 @@ const ShootPlayer = (shooter) => {
   if (target.defense) {
     console.log(`${target.name} has used defense and receives no damage`);
     console.log(`${target.name} has ${target.health} health left`);
-    pubsub.publish("targetDefendedFire", { shooter, target });
+    await pubsub.publish("targetDefendedFire", { shooter, target });
     return;
   }
   if (target.target && target.target.name === shooter.name) {
@@ -22,14 +22,14 @@ const ShootPlayer = (shooter) => {
   }
   target.health--;
   console.log(`${target.name} has ${target.health} health left`);
-  pubsub.publish("playerShotTarget", { shooter, target });
+  await pubsub.publish("playerShotTarget", { shooter, target });
 };
 
 const playerCommands = [
   {
     name: "shoot",
     effect: async (playerInstigator) => {
-      ShootPlayer(playerInstigator);
+      await ShootPlayer(playerInstigator);
     },
   },
   {

@@ -14,7 +14,7 @@ const pubsub = {};
     return token;
   };
 
-  q.publish = function (topic, args) {
+  q.publish = async function (topic, args) {
     if (!topics[topic]) {
       return false;
     }
@@ -23,7 +23,7 @@ const pubsub = {};
       len = subscribers ? subscribers.length : 0;
 
     while (len--) {
-      subscribers[len].func(topic, args);
+      await subscribers[len].func(topic, args);
     }
     // }, 0);
     return true;

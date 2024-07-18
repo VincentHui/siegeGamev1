@@ -16,6 +16,54 @@ const {
 const { startLoader } = require("../common/loader.js");
 const { ChooseWeapon } = require("./Weapons/chooseWeapon.js");
 
+function cleanUpPlayers() {
+
+  for (player of Players) {
+    player.defense = 0;
+    player.target = null;
+  }
+  Players.forEach((player) => {
+    if (player.health <= 0) {
+      pubsub.publish("playerDied", { deadplayer: player, players: Players });
+    }
+  });
+
+  Players.forEach((player) => {
+    if (player.health <= 0) {
+      console.log(
+        `${player.color}${player.name} has fallen to their wounds... ${resetText}`
+      );
+    }
+  });
+
+  Players = Players.filter((player) => {
+    return player.health > 0;
+  });
+}
+
+async function checkForEndConditions(turn) {
+  if (Players.length === 1) {
+    console.log();
+    console.log(
+      `${Players[0].color}${Players[0].name}${resetText} is the last one standing...`
+    );
+    pubsub.publish("playerSurvived", Players[0]);
+    await wait(2000);
+    process.exit();
+  }
+  if (Players.length === 0) {
+    console.log();
+    console.log(`all have failed the trial of the bullet...`);
+    pubsub.publish("allHaveDied");
+    await wait(2000);
+    process.exit();
+  }
+  if (turn >= MAXTURN) {
+    pubsub.publish("max turn reached");
+    process.exit();
+  }
+}
+
 const MAXTURN = 100;
 
 let Players = [
@@ -91,45 +139,11 @@ const GameLoop = async () => {
       await cmd.command.effect(cmd.player);
       await wait(1000);
     }
-    for (player of Players) {
-      player.defense = 0;
-      player.target = null;
-    }
-    Players.forEach((player) => {
-      if (player.health <= 0) {
-        pubsub.publish("playerDied", { deadplayer: player, players: Players });
-      }
-    });
 
-    Players.forEach((player) => {
-      if (player.health <= 0) {
-        console.log(
-          `${player.color}${player.name} has fallen to their wounds... ${resetText}`
-        );
-      }
-    });
+    cleanUpPlayers();
 
     await wait(2000);
-    if (Players.length === 1) {
-      console.log();
-      console.log(
-        `${Players[0].color}${Players[0].name}${resetText} is the last one standing...`
-      );
-      pubsub.publish("playerSurvived", Players[0]);
-      await wait(2000);
-      process.exit();
-    }
-    if (Players.length === 0) {
-      console.log();
-      console.log(`all have failed the trial of the bullet...`);
-      pubsub.publish("allHaveDied");
-      await wait(2000);
-      process.exit();
-    }
-    if (turn >= MAXTURN) {
-      pubsub.publish("max turn reached");
-      process.exit();
-    }
+    await checkForEndConditions(turn);
     pubsub.publish("endTurn", { turn });
   }
 };

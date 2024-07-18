@@ -4,6 +4,7 @@ const { wait } = require("../../common/wait.js");
 const readline = require("readline");
 const { resetText } = require("../../common/colors.js");
 const { pubsub } = require("../../common/pubSub.js");
+const { ask } = require("../../common/askPromise.js");
 
 const Weapons = [
   {
@@ -65,6 +66,11 @@ const Weapons = [
     onGiven: (player) => {
       console.log("the gun contains five finger nails...");
       player.bullets = 5;
+
+      pubsub.subscribe("targetDefendedFire", async (topic, arg) => {
+        if (arg.shooter !== player) return
+
+      })
     },
   },
   {
@@ -147,8 +153,7 @@ const ChooseWeapon = async (player, isAi) => {
   player.inventory.push(weapon);
   weapon.onGiven(player);
   console.log(
-    `${player.color}${
-      player.name
+    `${player.color}${player.name
     } has chosen ${weapon.name.toUpperCase()}${resetText}`
   );
   console.log();
