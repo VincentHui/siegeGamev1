@@ -5,8 +5,9 @@ let Eventcards = [
     name: "Thunderstorm",
     description:
       "A brewing storm opens the heavens. Rain pours down and soaks everyman to the bone.",
+    weight: 1,
     effect() {
-      GameState.Manpower = GameState.Manpower + 1000;
+      GameState.Manpower = GameState.Manpower - 500;
     },
   },
 
@@ -14,31 +15,24 @@ let Eventcards = [
     name: "Captured Spy",
     description:
       "Some of our men captured a suspicious man walking among the camp.",
+    weight: 0.5,
     effect() {
-      GameState.Morale = GameState.Morale - 2;
+      GameState.Morale = GameState.Morale + 2;
     },
   },
   {
     name: "Sign in the Heavens",
     description:
       "A blazing star fell from the heavens to the earth, our men wonder at the sign.",
+    weight: 0.4,
     effect() {
       GameState.Manpower = GameState.Manpower + 300;
     },
   },
   {
-    name: "",
-    description: "",
-    effect() {},
-  },
-  {
-    name: "",
-    description: "",
-    effect() {},
-  },
-  {
-    name: "",
-    description: "",
+    name: "No Event",
+    description: "Nothing ever happens",
+    weight: 5,
     effect() {},
   },
 ];
