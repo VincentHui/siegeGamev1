@@ -1,6 +1,13 @@
 let GameState = {
-  Manpower: 7500,
-  Morale: 20,
+  attacker: {
+    Manpower: 10000,
+    Morale: 20,
+    Reserves: 0,
+  },
+  defender: {
+    Manpower: 5000,
+    Morale: 15,
+  },
 };
 
 function Roll() {
