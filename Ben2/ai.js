@@ -1,6 +1,8 @@
 const { rollOneDice } = require("../common/dice.js");
 const { wait } = require("../common/wait.js");
 const { Players, MAXTURN } = require("./Players.js");
+const { turnLoader, dotLoader } = require("./turnloader.js");
+const readline = require("readline");
 
 const SelectCommandAI = async (playerCommands, player, players) => {
   const HasBullets = player.bullets > 0;
@@ -10,10 +12,10 @@ const SelectCommandAI = async (playerCommands, player, players) => {
   });
 
   const commandIndex = rollOneDice(playerCommands.length) - 1;
-  const randomTime = rollOneDice(4000) + 500;
+  const randomTime = rollOneDice(2500) + 500;
 
-  console.log(`${player.name} is choosing...`);
-  await wait(randomTime);
+  await dotLoader(randomTime);
+
   if (playerCommands[commandIndex].targetskill === `yes`) {
     let targets = players.filter((target) => target.name !== player.name);
     if (player.team) {
@@ -21,6 +23,8 @@ const SelectCommandAI = async (playerCommands, player, players) => {
     }
     player.target = targets[rollOneDice(targets.length) - 1];
   }
+
+  readline.moveCursor(process.stdout, 0, -1);
   console.log(`${player.name} has chosen`);
   return playerCommands[commandIndex];
 };

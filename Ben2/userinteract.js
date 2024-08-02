@@ -9,12 +9,16 @@ const {
   cyanHighlight,
   boldText,
   BasicBlue,
+  softBlue,
   grayText,
   lightred,
   magText,
+  orangeText,
+  pinkText,
   abilityText,
 } = require("../common/colors.js");
-const { Players, MAXTURN } = require("./Players.js");
+
+const { Players, MAXTURN, YesNo } = require("./Players.js");
 
 async function userArraySelect(array) {
   const result = await navigateArray(array, (index, elements) => {
@@ -38,7 +42,7 @@ async function playerCommandSelect(playerCommands, player, players) {
           (el, i) => `[${i === index ? "*" : ""}]`
         )}`
       );
-      console.log(`${abilityText}${elements[index].name}`);
+      console.log(`${resetText}${abilityText}${elements[index].name}`);
       console.log(`${resetText}${elements[index].description}`);
     });
     readline.moveCursor(process.stdout, 0, -2);
@@ -77,27 +81,53 @@ async function targetSelect(players) {
 }
 
 const SelectCommandInteractive = async (playerCommands, player, players) => {
-  // if (player.Initiative < 1) {
-  //   console.log(
-  //     `${player.color}${player.name}'s ${yellowText}turn is skipped!${resetText}`
-  //   );
-  //   wastrelHex();
-  //   return;
-  // }
-  // console.log("select");
-
   console.log(
     `Select: ${playerCommands.map((el, i) => `[${i === 0 ? "*" : ""}]`)}`
   );
-  console.log(`${abilityText}${playerCommands[0].name}`);
+  console.log(`${resetText}${abilityText}${playerCommands[0].name}`);
   console.log(`${resetText}${playerCommands[0].description}`);
   const result = await playerCommandSelect(playerCommands, player, players);
   console.log(`${player.color}${player.name} has chosen`);
   return result;
 };
 
+async function playerYesorNo(playerCommands) {
+  while (true) {
+    const result = await navigateArray(playerCommands, (index, elements) => {
+      readline.moveCursor(process.stdout, 8, -2);
+      readline.clearScreenDown(process.stdout);
+      console.log(`${elements.map((el, i) => `[${i === index ? "*" : ""}]`)}`);
+      console.log(`${yellowText}${elements[index].name}`);
+    });
+    readline.moveCursor(process.stdout, 0, -1);
+    readline.clearScreenDown(process.stdout);
+    return result;
+  }
+}
+
+const SelectYesorNo = async (YesNo) => {
+  console.log(`Select: ${YesNo.map((el, i) => `[${i === 0 ? "*" : ""}]`)}`);
+  console.log(`${yellowText}${YesNo[0].name}`);
+  const result = await playerYesorNo(YesNo);
+  return result;
+};
+
+async function passiveSelect(array) {
+  const result = await navigateArray(array, (index, elements) => {
+    readline.moveCursor(process.stdout, 0, -2);
+    readline.clearScreenDown(process.stdout);
+    console.log(`${elements.map((el, i) => `[${i === index ? "*" : ""}]`)}`);
+    console.log(elements[index]);
+  });
+  readline.moveCursor(process.stdout, 0, -2);
+  readline.clearScreenDown(process.stdout);
+  return result;
+}
+
 module.exports = {
+  passiveSelect,
   userArraySelect,
+  SelectYesorNo,
   playerCommandSelect,
   targetSelect,
   SelectCommandInteractive,
